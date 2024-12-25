@@ -26,10 +26,7 @@
 
 #include "stdext/compiler.h"
 
- // common C/C++ headers
-#include "pch.h"
-
-// global constants
+ // global constants
 #include "const.h"
 
 // stdext which includes additional C++ algorithms

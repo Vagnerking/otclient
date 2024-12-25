@@ -21,7 +21,7 @@
  */
 
 #ifndef __EMSCRIPTEN__
-
+#include "framework/pch.h"
 #include "server.h"
 #include "connection.h"
 #include <asio/io_service.hpp>

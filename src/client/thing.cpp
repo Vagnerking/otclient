@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "thing.h"
 #include "game.h"
 #include "map.h"

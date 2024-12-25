@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "framework/net/outputmessage.h"
 #include "game.h"
 #include "protocolgame.h"

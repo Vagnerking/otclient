@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "item.h"
 #include "container.h"
 #include "game.h"

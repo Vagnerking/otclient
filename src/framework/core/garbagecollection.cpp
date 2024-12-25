@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
+#include "framework/pch.h"
 #include "garbagecollection.h"
 #include <client/thingtypemanager.h>
 #include <framework/core/asyncdispatcher.h>

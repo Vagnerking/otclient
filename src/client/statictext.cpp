@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "statictext.h"
 #include "framework/core/graphicalapplication.h"
 #include "map.h"

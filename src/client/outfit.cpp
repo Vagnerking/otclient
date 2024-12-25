@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "outfit.h"
 
 Color Outfit::getColor(int color)

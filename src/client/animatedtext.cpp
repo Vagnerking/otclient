@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "animatedtext.h"
 #include "game.h"
 #include "gameconfig.h"

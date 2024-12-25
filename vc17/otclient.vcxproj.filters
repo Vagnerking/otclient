@@ -112,6 +112,12 @@
     <Filter Include="Source Files\framework\discord">
       <UniqueIdentifier>{ec2d9dd0-52dd-4258-83be-2ceb7ec02b73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\framework\proxy">
+      <UniqueIdentifier>{8ba16ac3-f79b-46d8-a40e-dea21c0ffe2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\framework\proxy">
+      <UniqueIdentifier>{134c45c5-1f9b-45db-a174-810fdab5b391}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\framework\luafunctions.cpp">
@@ -567,11 +573,14 @@
     <ClCompile Include="..\src\client\uimissile.cpp">
       <Filter>Source Files\client</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\framework\pch.cpp">
+      <Filter>Source Files\framework</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\framework\proxy\proxy.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\framework\proxy</Filter>
     </ClCompile>
     <ClCompile Include="..\src\framework\proxy\proxy_client.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\framework\proxy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1110,10 +1119,10 @@
       <Filter>Header Files\client</Filter>
     </ClInclude>
     <ClInclude Include="..\src\framework\proxy\proxy.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\framework\proxy</Filter>
     </ClInclude>
     <ClInclude Include="..\src\framework\proxy\proxy_client.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\framework\proxy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

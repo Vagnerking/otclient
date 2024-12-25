@@ -19,29 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#include "framework/pch.h"
-#include "otmlexception.h"
-#include "otmldocument.h"
 
-OTMLException::OTMLException(const OTMLNodePtr& node, const std::string_view error)
-{
-    std::stringstream ss;
-    ss << "OTML error";
-    if (!node->source().empty())
-        ss << " in '" << node->source() << "'";
-    ss << ": " << error;
-    m_what = ss.str();
-}
-
-OTMLException::OTMLException(const OTMLDocumentPtr& doc, const std::string_view error, const int line)
-{
-    std::stringstream ss;
-    ss << "OTML error";
-    if (doc && !doc->source().empty()) {
-        ss << " in '" << doc->source() << "'";
-        if (line >= 0)
-            ss << " at line " << line;
-    }
-    ss << ": " << error;
-    m_what = ss.str();
-}
+// The visual studio solution requires a pch.cpp including the pch.hpp
+#include "pch.h"

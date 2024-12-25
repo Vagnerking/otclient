@@ -21,7 +21,7 @@
  */
 
  //#define PROXY_DEBUG
-
+#include "framework/pch.h"
 #include "proxy_client.h"
 
 std::map<uint32_t, std::weak_ptr<Session>> g_sessions;

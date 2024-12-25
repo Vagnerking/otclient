@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "animatedtext.h"
 #include "attachedeffect.h"
 #include "attachedeffectmanager.h"

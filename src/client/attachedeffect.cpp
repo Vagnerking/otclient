@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "attachedeffect.h"
 #include "gameconfig.h"
 #include "lightview.h"

@@ -20,7 +20,7 @@
  *   out of or in connection with the Software or the use or other dealings in the
  *   Software.
  */
-
+#include "framework/pch.h"
 #include "qrcodegen.h"
 
 #include <algorithm>

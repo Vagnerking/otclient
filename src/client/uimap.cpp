@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
 #include "uimap.h"
 #include "game.h"
 #include "map.h"

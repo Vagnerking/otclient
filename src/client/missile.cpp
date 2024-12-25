@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "missile.h"
 #include "map.h"
 #include "thingtypemanager.h"

@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "tile.h"
 #include <framework/core/eventdispatcher.h>
 #include <framework/core/graphicalapplication.h>

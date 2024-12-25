@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "attachedeffectmanager.h"
 #include "attachedeffect.h"
 #include "thingtypemanager.h"

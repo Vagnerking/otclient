@@ -20,4 +20,6 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "player.h"

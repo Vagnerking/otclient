@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "spriteappearances.h"
 #include "game.h"
 #include <framework/core/filestream.h>

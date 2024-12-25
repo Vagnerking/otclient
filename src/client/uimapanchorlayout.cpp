@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
+#include "framework/pch.h"
 #include "uimapanchorlayout.h"
 #include "declarations.h"
 #include "uiminimap.h"

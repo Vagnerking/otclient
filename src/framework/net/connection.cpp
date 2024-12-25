@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 #ifndef __EMSCRIPTEN__
-
+#include "framework/pch.h"
 #include "connection.h"
 
 #include <framework/core/application.h>

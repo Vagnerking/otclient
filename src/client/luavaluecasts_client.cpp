@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "luavaluecasts_client.h"
 #include <framework/luaengine/luainterface.h>
 

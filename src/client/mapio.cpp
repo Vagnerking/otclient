@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #ifdef FRAMEWORK_EDITOR
 
 #include "game.h"

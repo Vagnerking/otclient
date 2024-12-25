@@ -1,3 +1,4 @@
+#include "framework/pch.h"
 #include <locale>
 #include <regex>
 

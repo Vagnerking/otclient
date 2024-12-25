@@ -21,7 +21,7 @@
  */
 
 #ifdef WIN32
-
+#include "framework/pch.h"
 #include "platform.h"
 #include <framework/core/eventdispatcher.h>
 #include <framework/stdext/stdext.h>

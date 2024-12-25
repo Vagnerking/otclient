@@ -20,9 +20,9 @@
  * THE SOFTWARE.
  */
 
-#include "framework/core/application.h"
 #if defined(WIN32) && defined(CRASH_HANDLER)
-
+#include "framework/pch.h"
+#include "framework/core/application.h"
 #include "crashhandler.h"
 #include <framework/global.h>
 

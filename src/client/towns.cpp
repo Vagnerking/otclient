@@ -19,8 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+#include "framework/pch.h"
 
 #ifdef FRAMEWORK_EDITOR
+
 #include "towns.h"
 
 #include <utility>

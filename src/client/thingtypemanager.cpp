@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "thingtypemanager.h"
 #include "creature.h"
 #include "game.h"

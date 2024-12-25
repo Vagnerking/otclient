@@ -20,6 +20,8 @@
 * THE SOFTWARE.
 */
 
+#include "framework/pch.h"
+
 #include "animator.h"
 #include "declarations.h"
 

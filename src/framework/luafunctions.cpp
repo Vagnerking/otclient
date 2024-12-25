@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
+#include "framework/pch.h"
 #include <framework/core/application.h>
 #include <framework/core/config.h>
 #include <framework/core/configmanager.h>

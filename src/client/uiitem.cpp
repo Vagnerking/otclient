@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
 #include "uiitem.h"
 #include "lightview.h"
 #include <framework/graphics/fontmanager.h>

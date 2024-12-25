@@ -1,3 +1,5 @@
+#include "framework/pch.h"
+
 #include "uigraph.h"
 #include <framework/graphics/drawpoolmanager.h>
 #include <framework/platform/platformwindow.h>

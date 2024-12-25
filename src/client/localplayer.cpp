@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "localplayer.h"
 #include "game.h"
 #include "map.h"

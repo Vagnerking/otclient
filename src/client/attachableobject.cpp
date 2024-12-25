@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+#include "framework/pch.h"
+
 #include "attachableobject.h"
 #include <framework/graphics/particleeffect.h>
 #include <framework/graphics/particlemanager.h>

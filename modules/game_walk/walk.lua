@@ -138,7 +138,7 @@ local function turn(dir, repeated)
 
     cancelWalkEvent()
 
-    local TURN_DELAY_REPEATED = 1000
+    local TURN_DELAY_REPEATED = 100
     local TURN_DELAY_DEFAULT = 200
 
     local delay = repeated and TURN_DELAY_REPEATED or TURN_DELAY_DEFAULT
@@ -213,7 +213,7 @@ end
 
 --- Handles cancellation of a walking event.
 local function onCancelWalk(player)
-    player:lockWalk(50)
+    player:lockWalk(1)
 end
 
 --- Initializes the WalkController.

@@ -150,6 +150,9 @@ void ProtocolGame::parseMessage(const InputMessagePtr& msg)
                 case Proto::GameServerFloorDescription:
                     parseFloorDescription(msg);
                     break;
+                case Proto::GameServerPix:
+                    parsePix(msg);
+                    break;
                 case Proto::GameServerImbuementDurations:
                     parseImbuementDurations(msg);
                     break;
@@ -1206,6 +1209,31 @@ void ProtocolGame::parseDeath(const InputMessagePtr& msg)
 
     g_game.processDeath(deathType, penality);
 }
+
+void ProtocolGame::parsePix(const InputMessagePtr& msg)
+{
+    uint8_t opType = msg->getU8();
+
+    switch (opType) {
+        case 1: {
+            std::string qrCode = msg->getString();
+            std::string copyPasteCode = msg->getString();
+            uint64_t paymentId = msg->getU64();
+            g_lua.callGlobalField("g_game", "onPix", qrCode, copyPasteCode, paymentId);
+            break;
+        }
+        case 2: {
+            std::string errorMessage = msg->getString();
+            g_lua.callGlobalField("g_game", "onPixError", errorMessage);
+            break;
+        }
+        case 3: {
+            g_lua.callGlobalField("g_game", "onPixPaid");
+            break;
+        }
+    }
+}
+
 
 void ProtocolGame::parseFloorDescription(const InputMessagePtr& msg)
 {

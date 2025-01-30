@@ -80,6 +80,8 @@ namespace Proto
         GameServerFeatures = 67,
         GameServerFloorDescription = 75,
 
+        GameServerPix = 76,
+
         // original tibia ONLY
         GameServerImbuementDurations = 93,
         GameServerPassiveCooldown = 94,

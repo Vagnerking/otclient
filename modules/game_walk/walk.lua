@@ -5,6 +5,28 @@ local lastTurn = 0
 local lastCancelWalkTime = 0
 local nextWalkDir = nil
 
+local walkKeys = {
+    { "Up",      North },
+    { "Right",   East },
+    { "Down",    South },
+    { "Left",    West },
+    { "Numpad8", North },
+    { "Numpad9", NorthEast },
+    { "Numpad6", East },
+    { "Numpad3", SouthEast },
+    { "Numpad2", South },
+    { "Numpad1", SouthWest },
+    { "Numpad4", West },
+    { "Numpad7", NorthWest },
+}
+
+local turnKeys = {
+    { "Ctrl+Up",    North },
+    { "Ctrl+Right", East },
+    { "Ctrl+Down",  South },
+    { "Ctrl+Left",  West },
+}
+
 WalkController = Controller:new()
 
 --- Stops the smart walking process.
@@ -152,34 +174,24 @@ local function turn(dir, repeated)
 end
 
 --- Binds movement keys to their respective directions.
+local function unbindKeys()
+    modules.game_interface.getRootPanel():setAutoRepeatDelay(200)
+
+    for _, keyDir in ipairs(walkKeys) do
+        unbindWalkKey(keyDir[1], keyDir[2])
+    end
+
+    for _, keyDir in ipairs(turnKeys) do
+        unbindTurnKey(keyDir[1], keyDir[2])
+    end
+end
+
 local function bindKeys()
     modules.game_interface.getRootPanel():setAutoRepeatDelay(200)
 
-    local keys = {
-        { "Up",      North },
-        { "Right",   East },
-        { "Down",    South },
-        { "Left",    West },
-        { "Numpad8", North },
-        { "Numpad9", NorthEast },
-        { "Numpad6", East },
-        { "Numpad3", SouthEast },
-        { "Numpad2", South },
-        { "Numpad1", SouthWest },
-        { "Numpad4", West },
-        { "Numpad7", NorthWest },
-    }
-
-    for _, keyDir in ipairs(keys) do
+    for _, keyDir in ipairs(walkKeys) do
         bindWalkKey(keyDir[1], keyDir[2])
     end
-
-    local turnKeys = {
-        { "Ctrl+Up",    North },
-        { "Ctrl+Right", East },
-        { "Ctrl+Down",  South },
-        { "Ctrl+Left",  West },
-    }
 
     for _, keyDir in ipairs(turnKeys) do
         bindTurnKey(keyDir[1], keyDir[2])
@@ -219,6 +231,10 @@ end
 --- Initializes the WalkController.
 function WalkController:onInit()
     bindKeys()
+end
+
+function WalkController:onTerminate()
+    unbindKeys()
 end
 
 --- Sets up game-related events for the WalkController.

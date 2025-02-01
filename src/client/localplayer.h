@@ -121,10 +121,10 @@ public:
 
     bool isServerWalking() { return m_serverWalk; }
 
+    Position getPosition() override { return isWalking() ? m_lastStepToPosition : m_position; }
+
 protected:
     void walk(const Position& oldPos, const Position& newPos) override;
-    void updateWalk(const bool /*isPreWalking*/ = false) override { Creature::updateWalk(isPreWalking()); }
-    void updateWalkOffset(uint8_t totalPixelsWalked) override;
     void terminateWalk() override;
 
     friend class Game;

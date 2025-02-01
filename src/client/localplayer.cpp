@@ -54,9 +54,6 @@ void LocalPlayer::walk(const Position& oldPos, const Position& newPos)
     m_autoWalkRetries = 0;
 
     if (isPreWalking()) {
-        if (newPos == m_lastPrewalkDestination) {
-            updateWalk();
-        }
         m_lastPrewalkDestination = {};
         return;
     }
@@ -67,6 +64,9 @@ void LocalPlayer::walk(const Position& oldPos, const Position& newPos)
 
 void LocalPlayer::preWalk(const Otc::Direction direction)
 {
+    if (isWalking())
+        return;
+
     auto pos = m_position.translatedToDirection(direction);
     // avoid reanimating prewalks
     if (m_lastPrewalkDestination.isValid() || m_lastPrewalkDestination == pos)
@@ -181,26 +181,6 @@ void LocalPlayer::stopAutoWalk()
 
     if (m_autoWalkContinueEvent)
         m_autoWalkContinueEvent->cancel();
-}
-
-void LocalPlayer::updateWalkOffset(const uint8_t totalPixelsWalked)
-{
-    if (!isPreWalking()) {
-        Creature::updateWalkOffset(totalPixelsWalked);
-        return;
-    }
-
-    // pre walks offsets are calculated in the oposite direction
-    m_walkOffset = {};
-    if (m_direction == Otc::North || m_direction == Otc::NorthEast || m_direction == Otc::NorthWest)
-        m_walkOffset.y = -totalPixelsWalked;
-    else if (m_direction == Otc::South || m_direction == Otc::SouthEast || m_direction == Otc::SouthWest)
-        m_walkOffset.y = totalPixelsWalked;
-
-    if (m_direction == Otc::East || m_direction == Otc::NorthEast || m_direction == Otc::SouthEast)
-        m_walkOffset.x = totalPixelsWalked;
-    else if (m_direction == Otc::West || m_direction == Otc::NorthWest || m_direction == Otc::SouthWest)
-        m_walkOffset.x = -totalPixelsWalked;
 }
 
 void LocalPlayer::terminateWalk()

@@ -620,7 +620,7 @@ void Creature::updateWalkingTile()
 
             // only render creatures where bottom right is inside tile rect
             if (virtualTileRect.contains(virtualCreatureRect.bottomRight())) {
-                newWalkingTile = g_map.getOrCreateTile(m_position.translated(xi, yi, 0));
+                newWalkingTile = g_map.getOrCreateTile(getPosition().translated(xi, yi, 0));
             }
         }
     }
@@ -946,9 +946,6 @@ uint16_t Creature::getStepDuration(const bool ignoreDiagonal, const Otc::Directi
             const int serverBeat = g_game.getServerBeat();
             stepDuration = ((stepDuration + serverBeat - 1) / serverBeat) * serverBeat;
         }
-
-        if (isLocalPlayer() && stepDuration <= 100)
-            stepDuration += 10;
 
         m_stepCache.duration = stepDuration;
 

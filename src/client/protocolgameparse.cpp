@@ -1394,6 +1394,11 @@ void ProtocolGame::parseCreatureMove(const InputMessagePtr& msg)
     const auto& creature = thing->static_self_cast<Creature>();
     creature->allowAppearWalk();
 
+    if (creature->isLocalPlayer() && g_game.m_walkTicks == -1) {
+        g_game.m_walkTicks = g_game.m_walkTimer.ticksElapsed();
+        g_game.m_walkTimer.restart();
+    }
+
     g_map.addThing(thing, newPos, -1);
 }
 
@@ -3895,17 +3900,17 @@ void ProtocolGame::parseCyclopediaHousesInfo(const InputMessagePtr& msg)
     // TO-DO Lua // Otui
 }
 
-void ProtocolGame::parseCyclopediaHouseList(const InputMessagePtr& msg) 
+void ProtocolGame::parseCyclopediaHouseList(const InputMessagePtr& msg)
 {
     const uint16_t housesCount = msg->getU16(); // housesCount
     for (auto i = 0; i < housesCount; ++i) {
         msg->getU32(); // clientId
         msg->getU8(); // 0x00 = Renovation, 0x01 = Available
-        
+
         const auto type = static_cast<Otc::CyclopediaHouseState_t>(msg->getU8());
         switch (type) {
             case Otc::CYCLOPEDIA_HOUSE_STATE_AVAILABLE: {
-                std::string bidderName = msg->getString(); 
+                std::string bidderName = msg->getString();
                 const auto isBidder = static_cast<bool>(msg->getU8());
                 msg->getU8(); // disableIndex
 
@@ -3921,7 +3926,7 @@ void ProtocolGame::parseCyclopediaHouseList(const InputMessagePtr& msg)
             case Otc::CYCLOPEDIA_HOUSE_STATE_RENTED: {
                 msg->getString(); // ownerName
                 msg->getU32(); // paidUntil
-                
+
                 const auto isRented = static_cast<bool>(msg->getU8());
                 if (isRented) {
                     msg->getU8(); // unknown
@@ -3941,7 +3946,7 @@ void ProtocolGame::parseCyclopediaHouseList(const InputMessagePtr& msg)
                 msg->getString(); // bidderName
                 msg->getU8(); // unknown
                 msg->getU64(); // internalBid
-                
+
                 const auto isNewOwner = static_cast<bool>(msg->getU8());
                 if (isNewOwner) {
                     msg->getU8(); // acceptTransferError

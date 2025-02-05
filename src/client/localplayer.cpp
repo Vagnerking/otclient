@@ -31,7 +31,7 @@ void LocalPlayer::lockWalk(const uint16_t millis)
     m_walkLockExpiration = std::max<ticks_t>(m_walkLockExpiration, g_clock.millis() + millis);
 }
 
-bool LocalPlayer::canWalk(const Otc::Direction dir, const bool ignoreLock)
+bool LocalPlayer::canWalk(const bool ignoreLock)
 {
     // paralyzed
     if (isDead())
@@ -183,7 +183,7 @@ void LocalPlayer::stopAutoWalk()
         m_autoWalkContinueEvent->cancel();
 }
 
-void LocalPlayer::terminateWalk(std::function<void()>&& onTerminate)
+void LocalPlayer::terminateWalk(std::function<void()>&& /*onTerminate*/)
 {
     Creature::terminateWalk([this, self = static_self_cast<LocalPlayer>()] {
         m_lastPrewalkDestination = {};
@@ -201,10 +201,6 @@ void LocalPlayer::onPositionChange(const Position& newPos, const Position& oldPo
         stopAutoWalk();
     else if (m_autoWalkDestination.isValid() && newPos == m_lastAutoWalkPosition)
         autoWalk(m_autoWalkDestination);
-
-    if (isServerWalking()) {
-        m_serverWalk = false;
-    }
 }
 
 void LocalPlayer::setStates(const uint32_t states)

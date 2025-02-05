@@ -952,7 +952,15 @@ uint16_t Creature::getStepDuration(const bool ignoreDiagonal, const Otc::Directi
                 : 2);
     }
 
-    return ignoreDiagonal ? m_stepCache.duration : m_stepCache.getDuration(m_lastStepDirection);
+    auto duration = ignoreDiagonal ? m_stepCache.duration : m_stepCache.getDuration(m_lastStepDirection);
+
+    if (isLocalPlayer() && g_game.getPing() > m_stepCache.duration) {
+        // stabilizes camera transition with server response time to keep movement fluid.
+        const auto diff = g_game.getPing() - m_stepCache.duration;
+        if (diff > 0) duration += diff < 10 ? 10 : 20;
+    }
+
+    return duration;
 }
 
 Point Creature::getDisplacement() const

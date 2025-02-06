@@ -47,7 +47,7 @@ bool LocalPlayer::canWalk(const bool ignoreLock)
     }
 
     // walking will only be allowed when the client's position is the same as the server's.
-    if (getPosition() != getServerPosition())
+    if (!isSynchronized())
         return false;
 
     // allow only if walk done, ex. diagonals may need additional ticks before taking another step
@@ -75,6 +75,18 @@ void LocalPlayer::preWalk(const Otc::Direction direction)
         return;
 
     Creature::walk(m_position, m_lastPrewalkDestination = std::move(pos));
+
+    m_updatingServerPosition = true;
+
+    static EventPtr event;
+    if (event) event->cancel();
+    event = g_dispatcher.scheduleEvent(
+        [this, self = static_self_cast<LocalPlayer>()] { m_updatingServerPosition = false; event = nullptr; },
+        std::max<int>(getStepDuration(), g_game.getPing()) + 50);
+}
+
+void LocalPlayer::setPosition(const Position& position, uint8_t stackPos, bool hasElevation) {
+    Creature::setPosition(position, stackPos, hasElevation);
 }
 
 bool LocalPlayer::retryAutoWalk()
@@ -168,7 +180,7 @@ bool LocalPlayer::autoWalk(const Position& destination, const bool retry)
     });
 
     if (!retry)
-        lockWalk();
+        lockWalk(getStepDuration());
 
     return true;
 }
@@ -185,9 +197,7 @@ void LocalPlayer::stopAutoWalk()
 
 void LocalPlayer::terminateWalk(std::function<void()>&& /*onTerminate*/)
 {
-    Creature::terminateWalk([this, self = static_self_cast<LocalPlayer>()] {
-        m_lastPrewalkDestination = {};
-    });
+    Creature::terminateWalk([this, self = static_self_cast<LocalPlayer>()] {});
 
     m_serverWalk = false;
     callLuaField("onWalkFinish");

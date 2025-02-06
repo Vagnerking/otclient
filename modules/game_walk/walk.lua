@@ -2,8 +2,9 @@ local smartWalkDirs = {}
 local smartWalkDir = nil
 local walkEvent = nil
 local lastTurn = 0
-local lastCancelWalkTime = 0
 local nextWalkDir = nil
+local lastWalkDir = nil
+
 
 local keys = {
     { "Up",      North },
@@ -60,34 +61,30 @@ end
 local function walk(dir)
     local player = g_game.getLocalPlayer()
 
-    if not player or g_game.isDead() or player:isDead() or player:isWalkLocked() or player:isServerWalking() then
-        if player:isServerWalking() then
-            player:lockWalk(25)
-        end
-
-        cancelWalkEvent()
-    end
-
     if g_game.isFollowing() then
         g_game.cancelFollow()
     end
 
     if player:isAutoWalking() then
-        local duration = player:getStepDuration()
-        scheduleEvent(function()
-            player:stopAutoWalk()
-            g_game.stop()
-        end, duration)
+        player:stopAutoWalk()
+        g_game.stop()
+        player:lockWalk(player:getStepDuration())
+    end
 
-        player:lockWalk(duration * 2)
+    if not player or g_game.isDead() or player:isDead() or player:isWalkLocked() or player:isServerWalking() then
+        cancelWalkEvent()
+        return
     end
 
     if not player:canWalk() then
-        nextWalkDir = dir
+        if lastWalkDir ~= dir then
+            nextWalkDir = dir
+        end
         return
     end
 
     nextWalkDir = nil
+    lastWalkDir = nil
 
     if g_game.getFeature(GameAllowPreWalk) then
         local toPos = Position.translatedToDirection(player:getPosition(), dir)
@@ -232,7 +229,9 @@ local function onAutoWalk(player) end
 
 --- Handles cancellation of a walking event.
 local function onCancelWalk(player)
-    player:lockWalk(50)
+    if not player:isWalkLocked() then
+        player:lockWalk(50)
+    end
 end
 
 --- Initializes the WalkController.

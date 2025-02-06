@@ -61,6 +61,8 @@ public:
     void setResourceBalance(Otc::ResourceTypes_t type, uint64_t value);
     void takeScreenshot(uint8_t type);
 
+    void setPosition(const Position& position, uint8_t stackPos = 0, bool hasElevation = false) override;
+
     uint32_t getFreeCapacity() { return m_freeCapacity; }
     uint32_t getTotalCapacity() { return m_totalCapacity; }
 
@@ -106,7 +108,7 @@ public:
     bool hasSight(const Position& pos);
     bool isKnown() { return m_known; }
     bool isServerWalking() { return m_serverWalk; }
-    bool isPreWalking() { return m_lastPrewalkDestination.isValid(); }
+    bool isPreWalking() { return m_updatingServerPosition && m_lastPrewalkDestination.isValid() && m_lastPrewalkDestination.z == m_position.z; }
     bool isAutoWalking() { return m_autoWalkDestination.isValid(); }
     bool isPremium() { return m_premium; }
     bool isPendingGame() const { return m_pending; }
@@ -119,7 +121,10 @@ public:
 
     void preWalk(Otc::Direction direction);
 
-    Position getPosition() override { return m_lastPrewalkDestination.isValid() && m_lastPrewalkDestination.z == m_position.z && m_lastPrewalkDestination.distance(m_position) < 2 ? m_lastPrewalkDestination : m_position; }
+    bool isSynchronized() { return getPosition() == getServerPosition(); }
+    Position getPosition() override {
+        return isPreWalking() ? m_lastPrewalkDestination : m_position;
+    }
 
 protected:
     void walk(const Position& oldPos, const Position& newPos) override;
@@ -152,6 +157,7 @@ private:
     bool m_known{ false };
     bool m_pending{ false };
     bool m_serverWalk{ false };
+    bool m_updatingServerPosition{ false };
 
     ItemPtr m_inventoryItems[Otc::LastInventorySlot];
 

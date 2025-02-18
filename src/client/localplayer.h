@@ -34,7 +34,7 @@ public:
     void stopAutoWalk();
 
     bool autoWalk(const Position& destination, bool retry = false);
-    bool canWalk(bool ignoreLock = false);
+    bool canWalk(Otc::Direction dir, bool ignoreLock = false);
 
     void setStates(uint32_t states);
     void setSkill(Otc::Skill skillId, uint16_t level, uint16_t levelPercent);
@@ -60,8 +60,6 @@ public:
     void setBlessings(uint16_t blessings);
     void setResourceBalance(Otc::ResourceTypes_t type, uint64_t value);
     void takeScreenshot(uint8_t type);
-
-    void setPosition(const Position& position, uint8_t stackPos = 0, bool hasElevation = false) override;
 
     uint32_t getFreeCapacity() { return m_freeCapacity; }
     uint32_t getTotalCapacity() { return m_totalCapacity; }
@@ -108,7 +106,7 @@ public:
     bool hasSight(const Position& pos);
     bool isKnown() { return m_known; }
     bool isServerWalking() { return m_serverWalk; }
-    bool isPreWalking() { return m_updatingServerPosition && m_lastPrewalkDestination.isValid() && m_lastPrewalkDestination.z == m_position.z; }
+    bool isPreWalking() { return m_lastPrewalkDestination.isValid(); }
     bool isAutoWalking() { return m_autoWalkDestination.isValid(); }
     bool isPremium() { return m_premium; }
     bool isPendingGame() const { return m_pending; }
@@ -121,14 +119,11 @@ public:
 
     void preWalk(Otc::Direction direction);
 
-    bool isSynchronized() { return getPosition() == getServerPosition(); }
-    Position getPosition() override {
-        return isPreWalking() ? m_lastPrewalkDestination : m_position;
-    }
+    Position getPosition() override { return m_lastStepToPosition.isValid() && m_lastStepToPosition.z == m_position.z ? m_lastStepToPosition : m_position; }
 
 protected:
     void walk(const Position& oldPos, const Position& newPos) override;
-    void terminateWalk(std::function<void()>&& onTerminate = nullptr) override;
+    void terminateWalk() override;
 
     friend class Game;
 
@@ -157,7 +152,6 @@ private:
     bool m_known{ false };
     bool m_pending{ false };
     bool m_serverWalk{ false };
-    bool m_updatingServerPosition{ false };
 
     ItemPtr m_inventoryItems[Otc::LastInventorySlot];
 

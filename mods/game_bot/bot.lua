@@ -318,7 +318,27 @@ function createDefaultConfigs()
             baseName2 = baseName2[#baseName2]
             local contents = g_resources.fileExists(file) and g_resources.readFileContents(file) or ""
             if contents:len() > 0 then
-              g_resources.writeFileContents("/bot/" .. config_name .. "/" .. baseName .. "/" .. baseName2, contents)
+              local substitutions = {
+                { 'add%("ping", "Server ping", %-?%d+%)', 'add("ping", "Server ping", -200)' }, -- fixes bug of bot walking stuck / It is a temporary correction that should be observed later
+                --standardizes the walk delay
+                { 'add%("walkDelay", "Walk delay", %-?%d+%)', 'add("walkDelay", "Walk delay", 50)' }, --50 is my tests is better because stairs up/down don't fails, value 0 is good to walk but fails in stairs
+                { 'g_game%.walk%(dir,%s-[^)]+%)', 'modules.game_walk.walk(dir)' }, -- fixes new walk method
+                { '%(precision or 1%)', '(precision or 0)' } -- fixes bug in precision y-axis
+              }
+
+              local newContents = contents
+              local modified = false
+              
+              for _, sub in ipairs(substitutions) do
+                local pattern, replacement = unpack(sub)
+                newContents, changes = newContents:gsub(pattern, replacement)
+                
+                if changes > 0 then modified = true end
+              end
+
+              if modified then print("[BOT FIX] Modified config file => " .. file) end
+
+              g_resources.writeFileContents("/bot/" .. config_name .. "/" .. baseName .. "/" .. baseName2, newContents)
             end
           end
         else

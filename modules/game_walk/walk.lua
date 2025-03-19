@@ -59,7 +59,7 @@ local function canChangeFloor(pos, deltaZ)
 end
 
 --- Makes the player walk in the given direction.
-local function walk(dir)
+function walk(dir)
     local player = g_game.getLocalPlayer()
     if not player or g_game.isDead() or player:isDead() then
         return
